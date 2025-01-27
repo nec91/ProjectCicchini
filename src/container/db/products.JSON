@@ -1,0 +1,72 @@
+[
+  {
+    "timestamp": "27/1/2025, 07:11:48",
+    "title": "titulo 3",
+    "description": "description 3",
+    "code": 1234,
+    "price": 12,
+    "status": true,
+    "stock": "categoria",
+    "category": "aaaa",
+    "thumbnail": 200,
+    "id": 1
+  },
+  {
+    "timestamp": "27/1/2025, 07:11:57",
+    "title": "titulo 3",
+    "description": "description 3",
+    "code": 1234,
+    "price": 12,
+    "status": true,
+    "stock": "categoria",
+    "category": "aaaa",
+    "thumbnail": 200,
+    "id": 3
+  },
+  {
+    "timestamp": "27/1/2025, 07:11:58",
+    "title": "titulo 3",
+    "description": "description 3",
+    "code": 1234,
+    "price": 12,
+    "status": true,
+    "stock": "categoria",
+    "category": "aaaa",
+    "thumbnail": 200,
+    "id": 4
+  },
+  {
+    "timestamp": "27/1/2025, 07:12:17",
+    "title": "titulo 3",
+    "description": "description 3",
+    "code": 1234,
+    "price": 12,
+    "status": true,
+    "stock": "categoria",
+    "category": "aaaa",
+    "thumbnail": 200,
+    "id": 6
+  },
+  {
+    "title": "titulo 6",
+    "description": "description 88",
+    "code": 1234,
+    "price": 2002,
+    "stock": 1211,
+    "category": "ssss",
+    "thumbnail": "aaaassss",
+    "id": 7
+  },
+  {
+    "timestamp": "27/1/2025, 07:12:42",
+    "title": "titulo 3",
+    "description": "description 3",
+    "code": 1234,
+    "price": 12,
+    "status": true,
+    "stock": "categoria",
+    "category": "aaaa",
+    "thumbnail": 200,
+    "id": 8
+  }
+]
