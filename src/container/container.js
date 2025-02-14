@@ -92,20 +92,27 @@ class Container {
     try {
       const fileContent = await this.#readFile();
       const index = fileContent.findIndex((e) => e.id === id);
-
+  
       if (index === -1) {
         throw new Error("Elemento no encontrado");
       }
+        // Genera un nuevo timestamp
+      const updatedTimestamp = new Date().toLocaleString()
 
-      fileContent[index] = { ...element, id };
-      await fs.promises.writeFile(
+      fileContent[index] = {
+        ...fileContent[index],
+        ...element,
+        timestamp: updatedTimestamp, 
+        id, 
+      };
+        await fs.promises.writeFile(
         this.fileRoute,
         JSON.stringify(fileContent, null, 2),
         "utf-8"
       );
-      return "Producto modificado correctamente";
+        return "Producto modificado correctamente";
     } catch (error) {
-      throw new Error("Error al modificar el producto");
+      throw new Error(`Error al modificar el producto: ${error.message}`);
     }
   }
 

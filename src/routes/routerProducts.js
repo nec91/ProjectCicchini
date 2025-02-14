@@ -9,7 +9,7 @@ const fileContent = new Container("products");
 // Ruta para mostrar todos los productos
 productsRouter.get("/", async (req, res) => {
   try {
-    const products = await fileContent.getAll(); 
+    const products = await fileContent.getAll();
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ error: "Error al obtener los productos." });
@@ -34,23 +34,25 @@ productsRouter.get("/:pid", async (req, res) => {
 // Ruta para ingresar un producto
 productsRouter.post("/", async (req, res) => {
   try {
-    const newProductData = req.body;
+    const { title, description, code, price, stock, category, thumbnail } =
+      req.body;
     const newProduct = new Product(
-      newProductData.title,
-      newProductData.description,
-      newProductData.code,
-      newProductData.price,
-      newProductData.stock,
-      newProductData.category,
-      newProductData.thumbnail,
+      title,
+      description,
+      code,
+      thumbnail,
+      price,
+      stock,
+      category
     );
+    const newProductId = await fileContent.save(newProduct);
 
-    const savedProduct = await fileContent.save(newProduct);
     res.status(201).json({
       message: "Producto ingresado correctamente.",
-      product: savedProduct,
+      product: { id: newProductId },
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Error al ingresar el producto." });
   }
 });
@@ -91,4 +93,4 @@ productsRouter.delete("/:pid", async (req, res) => {
   }
 });
 
-export {productsRouter}
+export { productsRouter };

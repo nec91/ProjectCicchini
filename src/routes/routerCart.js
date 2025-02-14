@@ -22,16 +22,16 @@ cartRouter.post("/", async (req, res) => {
 });
 
 // Eliminar un carrito por su ID
-cartRouter.delete("/:id/", async (req, res) => {
+cartRouter.delete("/:cid/", async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
-    const cart = await fileContent.getById(id);
+    const cid = parseInt(req.params.cid);
+    const cart = await fileContent.getById(cid);
 
     if (!cart) {
       return res.status(404).json({ error: "Carrito no encontrado." });
     }
 
-    await fileContent.deleteById(id);
+    await fileContent.deleteById(cid);
     res.status(200).json({ message: "Carrito eliminado correctamente." });
   } catch (error) {
     res.status(500).json({ error: "Error al eliminar el carrito." });
@@ -39,10 +39,10 @@ cartRouter.delete("/:id/", async (req, res) => {
 });
 
 // Obtener productos de un carrito
-cartRouter.get("/:id/products", async (req, res) => {
+cartRouter.get("/:cid/products", async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
-    const cart = await fileContent.getById(id);
+    const cid = parseInt(req.params.cid);
+    const cart = await fileContent.getById(cid);
 
     if (!cart) {
       return res.status(404).json({ error: "Carrito no encontrado." });
@@ -52,7 +52,7 @@ cartRouter.get("/:id/products", async (req, res) => {
       return res.status(400).json({ error: "El carrito no contiene productos." });
     }
 
-    res.status(200).json({ id: cart.id, productos: cart.products });
+    res.status(200).json({ cart_id: cart.id, productos: cart.products });
   } catch (error) {
     res.status(500).json({ error: "Error al obtener productos del carrito." });
   }
