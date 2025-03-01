@@ -1,0 +1,76 @@
+import { ProductModel } from "../models/products.js";
+import mongoose from "mongoose";
+
+class ProductRepository {
+    constructor() {
+        this.productModel = ProductModel;
+    }
+
+    saveProduct = async ({ title, description, code, price, stock, category, thumbnail }) => {
+        try {
+            return await this.productModel.create({
+                title,
+                description,
+                code,
+                price,
+                stock,
+                category,
+                thumbnail,
+            });
+        } catch (error) {
+            throw new Error(`Error en el repository (saveProduct): ${error.message}`);
+        }
+    }
+
+    getAllProducts = async () => {
+        try {
+            return await this.productModel.find()
+        } catch (error) {
+            throw new Error(`Error en el repository (getAllProducts): ${error.message}`);
+        }
+    }
+    getProductById = async (_id) => {
+        try {
+            return await this.productModel.findById(_id)
+        } catch (error) {
+            throw new Error(`Error en el repository (getProductById): ${error.message}`);
+        }
+    }
+
+    modifyProductById = async (_id, updateData) => {
+        try {
+            if (!mongoose.Types.ObjectId.isValid(_id)) {
+                throw new Error("ID no válido de MongoDB");
+            }
+            const existingProduct = await this.productModel.findById(_id);
+            if (!existingProduct) {
+                return null;
+            }
+
+            await this.productModel.updateOne({ _id }, updateData);
+
+            return await this.productModel.findById(_id);
+        } catch (error) {
+            throw new Error(`Error en el repository (modifyProductById): ${error.message}`);
+        }
+    }
+
+    deleteProductById = async (_id) => {
+        try {
+            if (!mongoose.Types.ObjectId.isValid(_id)) {
+                throw new Error("ID no válido de MongoDB");
+            }
+            const existingProduct = await this.productModel.findById(_id);
+            if (!existingProduct) {
+                return null;
+            }
+            await this.productModel.findByIdAndDelete(_id);
+            return existingProduct;
+        } catch (error) {
+            throw new Error(`Error en el repository (deleteProductById): ${error.message}`);
+        }
+    }
+}
+
+
+export { ProductRepository }

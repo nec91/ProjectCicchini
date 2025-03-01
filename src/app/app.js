@@ -10,7 +10,6 @@ const initApp = () => {
   app.use(express.urlencoded({ extended: true }));
 
   //Routes
-
   app.use("/api/carts", cartRouter);
   app.use("/api/products", productsRouter);
 
