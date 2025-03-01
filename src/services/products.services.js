@@ -21,9 +21,9 @@ class ProductService {
             throw new Error(`Error en el servicio (saveProduct): ${error.message}`);
         }
     }
-    getAllProducts = async () => {
+    getAllProducts = async (query, options) => {
         try {
-            return await this.ProductRepository.getAllProducts()
+            return await this.ProductRepository.getAllProducts(query, options)
         } catch (error) {
             throw new Error(`Error en el servicio (getAllProducts): ${error.message}`);
         }

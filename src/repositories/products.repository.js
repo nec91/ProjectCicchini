@@ -22,9 +22,11 @@ class ProductRepository {
         }
     }
 
-    getAllProducts = async () => {
+    getAllProducts = async (query = {}, options = { page: 1, limit: 10 }) => {
         try {
-            return await this.productModel.find()
+            const result = await this.productModel.paginate(query, options);
+     
+            return result;
         } catch (error) {
             throw new Error(`Error en el repository (getAllProducts): ${error.message}`);
         }

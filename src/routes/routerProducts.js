@@ -1,13 +1,13 @@
 import { Router } from "express";
-const productsRouter = Router();
 import  ProductController  from '../controller/products.controller.js'
+import { paginateProducts } from "../middlewares/pagination.middleware.js";
 
-// import Container from "../container/container.js";
-
+const productsRouter = Router();
 
 
 // // Ruta para mostrar todos los productos
 productsRouter.get("/",
+  paginateProducts,
   ProductController.getAllProducts
  );
 

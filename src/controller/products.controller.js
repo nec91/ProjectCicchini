@@ -28,12 +28,25 @@ class ProductController {
   }
   getAllProducts = async (req, res, next) => {
     try {
-      const products = await this.#productService.getAllProducts()
-      res.status(200).json(products);
+      const { query, options } = res.paginatedResults;
+      const result = await this.#productService.getAllProducts(query, options);
+
+      res.status(200).json({
+        status: "success",
+        payload: result.docs,
+        totalPages: result.totalPages,
+        prevPage: result.prevPage,
+        nextPage: result.nextPage,
+        page: result.page,
+        hasPrevPage: result.hasPrevPage,
+        hasNextPage: result.hasNextPage,
+        prevLink: result.hasPrevPage ? `/api/products?page=${result.prevPage}&limit=${options.limit}` : null,
+        nextLink: result.hasNextPage ? `/api/products?page=${result.nextPage}&limit=${options.limit}` : null
+      });
     } catch (error) {
-      next(res.status(400).json({ error: "Error al obtener los productos." }))
+      next(res.status(400).json({ error: "Error al obtener los productos." }));
     }
-  }
+  };
 
   getProductById = async (req, res, next) => {
     try {
