@@ -22,7 +22,7 @@ cartRouter.delete("/:cid", cartsController.deleteCartById);
 // Reemplazar todos los productos del carrito
 cartRouter.put("/:cid", cartsController.updateCartProducts);
 
-// Actualizar solo la cantidad de un producto en el carrito
+// Actualiza solo la cantidad de un producto en el carrito
 cartRouter.put("/:cid/products/:pid", cartsController.updateProductQuantity);
 
 export { cartRouter }

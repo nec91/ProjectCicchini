@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "8ef24d82-b613-4c37-a8fb-a7176c1ab0ee",
+		"name": "ProjectCicchini-carts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23500902"
+	},
+	"item": [
+		{
+			"name": "api/carts",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/carts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/carts/:cid/products/:pid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/carts/67c3b3203f49761a23b652c5/products/67c3ac183f49761a23b65273",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carts",
+						"67c3b3203f49761a23b652c5",
+						"products",
+						"67c3ac183f49761a23b65273"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/carts/:cid/products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/carts/67c3b3203f49761a23b652c5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carts",
+						"67c3b3203f49761a23b652c5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/carts/:cid/products/:pid",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/carts/67c3b3203f49761a23b652c5/products/67c3ac183f49761a23b65273",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carts",
+						"67c3b3203f49761a23b652c5",
+						"products",
+						"67c3ac183f49761a23b65273"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/carts/:cid",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/carts/67c28047c5b668ed1732caf9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carts",
+						"67c28047c5b668ed1732caf9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/carts/:cid",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"products\": [\r\n    { \"product\": \"67c2479eac71fa5c33b5a2e7\", \"quantity\": 7 },\r\n    { \"product\": \"67c247cfa32d168b30e71107\", \"quantity\": 9 }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/carts/67c28046c5b668ed1732caf7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carts",
+						"67c28046c5b668ed1732caf7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/carts/:cid/products/:pid",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"quantity\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/carts/67c28046c5b668ed1732caf7/products/67c2479eac71fa5c33b5a2e7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"carts",
+						"67c28046c5b668ed1732caf7",
+						"products",
+						"67c2479eac71fa5c33b5a2e7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

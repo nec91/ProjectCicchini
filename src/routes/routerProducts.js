@@ -18,7 +18,7 @@ productsRouter.get("/:pid",
 
 // Ruta para ingresar un producto
 productsRouter.post("/", 
-  ProductController.saveProduct)
+  ProductController.createProduct)
 
 // Ruta para modificar un producto
 productsRouter.put("/:pid", 

@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "7a196115-8461-450e-9500-7e984b750482",
+		"name": "ProjectCicchini-products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23500902"
+	},
+	"item": [
+		{
+			"name": "api/products",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Finca La Linda Cabernet Sauvignon 750ml Luigi Bosca\",\r\n    \"description\": \"Disfruta de un exquisito Vino Finca La Linda Cabernet Sauvignon 750ml de la prestigiosa bodega Luigi Bosca. Este vino tinto de la línea La Linda, proveniente de la reconocida región vitivinícola de Mendoza, Argentina, te ofrece una experiencia única y placentera en cada copa. Su varietal Cabernet Sauvignon es conocido por su sabor intenso y equilibrado, ideal para acompañar tus comidas y celebraciones. La presentación en botella de 750ml es perfecta para compartir con amigos y familiares, y su elegante diseño lo convierte en un regalo ideal. Aunque no es orgánico, este vino es elaborado con altos estándares de calidad, garantizando una experiencia inolvidable para los amantes del buen vino. No esperes más para deleitar tus sentidos con el Vino Finca La Linda Cabernet Sauvignon 750ml de Luigi Bosca.\",\r\n    \"code\": 1,\r\n    \"price\": 7910,\r\n    \"status\": true,\r\n    \"stock\": 22,\r\n    \"category\": \"Cabernet Sauvignon\",\r\n    \"thumbnail\": \"https://www.mercadolibre.com.ar/vino-finca-la-linda-cabernet-sauvignon-750ml-luigi-bosca/p/MLA19737821?pdp_filters=item_id%3AMLA1219948384&from=gshop&matt_tool=65922003&matt_word=&matt_source=google&matt_campaign_id=22107887205&matt_ad_group_id=173357535796&matt_match_type=&matt_network=g&matt_device=c&matt_creative=729634816769&matt_keyword=&matt_ad_position=&matt_ad_type=pla&matt_merchant_id=735111307&matt_product_id=MLA19737821-product&matt_product_partition_id=2389822565641&matt_target_id=aud-1930507555160:pla-2389822565641&cq_src=google_ads&cq_cmp=22107887205&cq_net=g&cq_plt=gp&cq_med=pla&gad_source=1&gclid=CjwKCAiAtNK8BhBBEiwA8wVt93F3RKFvrRxxIS_e8vafezu3uBVtE0GI1mBZpfIE45xz8JxItp8lvxoCRXgQAvD_BwE\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/products--->paginate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/products?page=1&limit=5&sort=asc&query=Finca La Linda Cabernet Sauvignon 750ml Luigi Bosca",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "sort",
+							"value": "asc"
+						},
+						{
+							"key": "query",
+							"value": "Finca La Linda Cabernet Sauvignon 750ml Luigi Bosca"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/products/:pid",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/products/67c3ab7e3f49761a23b6526d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						"67c3ab7e3f49761a23b6526d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/products/:pid",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Nuevo nombre del producto\",\r\n  \"price\": 500,\r\n  \"stock\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/products/67c3ab7e3f49761a23b6526d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						"67c3ab7e3f49761a23b6526d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/products/:pid",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/products/67c3ab7e3f49761a23b6526d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						"67c3ab7e3f49761a23b6526d"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

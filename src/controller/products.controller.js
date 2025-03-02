@@ -6,10 +6,10 @@ class ProductController {
     this.#productService = new ProductService()
   }
 
-  saveProduct = async (req, res, next) => {
+  createProduct = async (req, res, next) => {
     try {
       const { title, description, code, price, stock, category, thumbnail } = req.body
-      const productCreated = await this.#productService.saveProduct({
+      const productCreated = await this.#productService.createProduct({
         title,
         description,
         code,

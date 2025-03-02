@@ -6,8 +6,7 @@ export const initMongoDBAtlas = async () => {
   try {
     await connect(config.db.connectionString)
     console.info(
-      'Conectado con la base de datos de MongoDB: ',
-      config.db.connectionString
+      'Conectado con la base de datos de MongoDB'
     )
   } catch (error) {
     console.error(

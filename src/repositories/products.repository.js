@@ -6,7 +6,7 @@ class ProductRepository {
         this.productModel = ProductModel;
     }
 
-    saveProduct = async ({ title, description, code, price, stock, category, thumbnail }) => {
+    createProduct = async ({ title, description, code, price, stock, category, thumbnail }) => {
         try {
             return await this.productModel.create({
                 title,
@@ -18,7 +18,7 @@ class ProductRepository {
                 thumbnail,
             });
         } catch (error) {
-            throw new Error(`Error en el repository (saveProduct): ${error.message}`);
+            throw new Error(`Error en el repository (createProduct): ${error.message}`);
         }
     }
 

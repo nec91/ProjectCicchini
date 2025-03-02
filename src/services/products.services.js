@@ -6,9 +6,9 @@ class ProductService {
         this.ProductRepository = new ProductRepository()
     }
 
-    saveProduct = async ({ title, description, code, price, stock, category, thumbnail }) => {
+    createProduct = async ({ title, description, code, price, stock, category, thumbnail }) => {
         try {
-            return await this.ProductRepository.saveProduct({
+            return await this.ProductRepository.createProduct({
                 title,
                 description,
                 code,
@@ -18,7 +18,7 @@ class ProductService {
                 thumbnail,
             });
         } catch (error) {
-            throw new Error(`Error en el servicio (saveProduct): ${error.message}`);
+            throw new Error(`Error en el servicio (createProduct): ${error.message}`);
         }
     }
     getAllProducts = async (query, options) => {
