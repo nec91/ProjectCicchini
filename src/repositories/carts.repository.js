@@ -1,4 +1,4 @@
-import { CartModel } from "../models/cart.js";
+import { CartModel } from "../models/cart.model.js";
 import mongoose from "mongoose";
 
 class CartRepository {

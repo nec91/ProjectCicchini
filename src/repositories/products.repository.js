@@ -1,4 +1,4 @@
-import { ProductModel } from "../models/products.js";
+import { ProductModel } from "../models/products.model.js";
 import mongoose from "mongoose";
 
 class ProductRepository {
