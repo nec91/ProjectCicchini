@@ -2,7 +2,7 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 import jwtStrategy from 'passport-jwt';
 
-import { userModel } from '../models/users.model.js';
+import { userModel } from '../repositories/models/users.model.js'
 import { createHash, PRIVATE_KEY, cookieExtractor } from '../utils/utils.js';
 
 
@@ -13,7 +13,7 @@ const ExtractJWT = jwtStrategy.ExtractJwt;
 
 const initializePassport = () => {
     //JWT
-    passport.use('jwt', new JwtStrategy(
+    passport.use('current', new JwtStrategy(
         {
             jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
             secretOrKey: PRIVATE_KEY
@@ -21,7 +21,6 @@ const initializePassport = () => {
             console.log("Entrando a passport Strategy con JWT.");
             try {
                 console.log("JWT obtenido del payload");
-                console.log(jwt_payload);
                 return done(null, jwt_payload.user);
             } catch (error) {
                 console.error(error);
@@ -47,8 +46,8 @@ const initializePassport = () => {
                 const user = {
                     first_name,
                     last_name,
-                    username,
                     age,
+                    email,
                     password: createHash(password)
                 };
                 const result = await userModel.create(user);

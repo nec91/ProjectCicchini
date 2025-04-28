@@ -1,7 +1,7 @@
-const paginateProducts = async (req, res, next) => {
+export const paginateProducts = async (req, res, next) => {
   try {
     const { page = 1, limit = 10, query, sort } = req.query;
-    
+
     const searchQuery = query
       ? { title: { $regex: query, $options: "i" } }
       : {};
@@ -10,7 +10,7 @@ const paginateProducts = async (req, res, next) => {
     const options = {
       page: Number(page),
       limit: Number(limit),
-      sort: sort ? { price: sort === "asc" ? 1 : -1 } : {}, 
+      sort: sort ? { price: sort === "asc" ? 1 : -1 } : {},
     };
 
     res.paginatedResults = { query: searchQuery, options };
@@ -19,6 +19,3 @@ const paginateProducts = async (req, res, next) => {
     res.status(400).json({ status: "error", message: `Error en la paginación: ${error.message}` });
   }
 };
-
-  
-  export {paginateProducts}

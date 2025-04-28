@@ -5,7 +5,7 @@ import { paginateProducts } from "../middlewares/pagination.middleware.js";
 const productsRouter = Router();
 
 
-// // Ruta para mostrar todos los productos
+// Ruta para mostrar todos los productos
 productsRouter.get("/",
   paginateProducts,
   ProductController.getAllProducts

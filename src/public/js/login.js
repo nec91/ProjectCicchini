@@ -18,18 +18,13 @@ form.addEventListener('submit', e => {
                 .then(json => {
                     // 1er:localStorage - analizamos que nos llega al cliente
                     console.log(json);
-
-                    // localStorage.setItem('authToken', json.jwt)
-
-
+                    localStorage.setItem('authToken', json.jwt)
                     // 2do:cookie
                     console.log("Cookies generadas:");
                     console.log(document.cookie)
-
                     alert("Login realizado con exito!")
-
                 })
-            window.location.replace('/api/users');
+            window.location.replace('/users');
         } else if (result.status === 401) {
             console.log(result);
             alert("Login invalido revisa tus credenciales!");

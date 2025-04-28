@@ -62,7 +62,7 @@ class ProductController {
     }
   }
 
-  modifyProductById = async (req, res,netx) => {
+  modifyProductById = async (req, res, netx) => {
     try {
       //const { pid } = req.params
       const id = req.params.pid

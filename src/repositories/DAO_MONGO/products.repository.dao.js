@@ -20,24 +20,27 @@ class ProductRepository {
         } catch (error) {
             throw new Error(`Error en el repository (createProduct): ${error.message}`);
         }
-    }
+    };
 
     getAllProducts = async (query = {}, options = { page: 1, limit: 10 }) => {
         try {
             const result = await this.productModel.paginate(query, options);
-     
+
+            result.docs = result.docs.map(doc => doc.toObject());
+
             return result;
         } catch (error) {
             throw new Error(`Error en el repository (getAllProducts): ${error.message}`);
         }
-    }
+    };
+
     getProductById = async (_id) => {
         try {
-            return await this.productModel.findById(_id)
+            return await this.productModel.findById(_id).lean();
         } catch (error) {
             throw new Error(`Error en el repository (getProductById): ${error.message}`);
         }
-    }
+    };
 
     modifyProductById = async (_id, updateData) => {
         try {
@@ -51,11 +54,11 @@ class ProductRepository {
 
             await this.productModel.updateOne({ _id }, updateData);
 
-            return await this.productModel.findById(_id);
+            return await this.productModel.findById(_id).lean(); 
         } catch (error) {
             throw new Error(`Error en el repository (modifyProductById): ${error.message}`);
         }
-    }
+    };
 
     deleteProductById = async (_id) => {
         try {
@@ -67,12 +70,11 @@ class ProductRepository {
                 return null;
             }
             await this.productModel.findByIdAndDelete(_id);
-            return existingProduct;
+            return existingProduct.toObject(); 
         } catch (error) {
             throw new Error(`Error en el repository (deleteProductById): ${error.message}`);
         }
-    }
+    };
 }
 
-
-export { ProductRepository }
+export { ProductRepository };

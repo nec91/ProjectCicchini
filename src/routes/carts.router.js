@@ -25,4 +25,7 @@ cartRouter.put("/:cid", cartsController.updateCartProducts);
 // Actualiza solo la cantidad de un producto en el carrito
 cartRouter.put("/:cid/products/:pid", cartsController.updateProductQuantity);
 
+//Finalizacion de proceso de compra
+cartRouter.post("/:cid/purchase", cartsController.purchaseCart);
+
 export { cartRouter }

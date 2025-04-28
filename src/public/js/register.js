@@ -18,7 +18,7 @@ form.addEventListener('submit', e => {
         if (result.status === 201) {
             result.json();
             alert("Usuario creado con exito!");
-            window.location.replace('/api/users/login');
+            window.location.replace('/users/login');
         } else {
             alert("No se pudo crear el usuario!");
         }

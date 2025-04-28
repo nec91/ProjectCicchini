@@ -1,9 +1,14 @@
 import { CartService } from "../services/carts.services.js"
-
+import { ProductService } from "../services/products.services.js"
+import { TicketService } from "../services/ticket.services.js"
 class CartController {
     #CartService
+    #ProductService
+    #TicketService
     constructor() {
         this.#CartService = new CartService()
+        this.#ProductService = new ProductService();
+        this.#TicketService = new TicketService();
     }
 
     createCart = async (req, res, next) => {
@@ -18,7 +23,7 @@ class CartController {
         }
     }
 
-    getCartById = async (req, res, next) => {
+    getCartById = async (req, res,) => {
         try {
             const cart = await this.#CartService.getCartById(req.params.cid);
             res.status(200).json({ cart_id: cart.id, productos: cart.products });
@@ -99,6 +104,54 @@ class CartController {
             });
         } catch (error) {
             res.status(400).json({ error: error.message });
+        }
+    };
+
+    purchaseCart = async (req, res) => {
+        try {
+            const { cid } = req.params;
+            const cart = await this.#CartService.getCartById(cid);
+            if (!cart) {
+                return res.status(404).send({ status: "error", message: "Carrito no encontrado" });
+            }
+            let totalAmount = 0;
+            const productsRejected = [];
+
+            for (const item of cart.products) {
+                const dbProduct = await this.#ProductService.getProductById(item.product._id);
+
+                if (dbProduct.stock >= item.quantity) {
+                    // verifica el stock
+                    dbProduct.stock -= item.quantity;
+                    await this.#ProductService.modifyProductById(dbProduct._id, { stock: dbProduct.stock });
+
+                    totalAmount += dbProduct.price * item.quantity;
+                } else {
+                    // si no hay stock suficiente 
+                    productsRejected.push(dbProduct._id);
+                }
+            }
+            // Crear Ticket sólo si hubo productos exitosos
+            let ticket = null;
+            if (totalAmount > 0) {
+                const purchaserEmail = req.user.email; 
+                ticket = await this.#TicketService.createTicket({ amount: totalAmount, purchaser: purchaserEmail });
+            }
+
+            // Ahora limpiar el carrito: dejar sólo productos rechazados
+            const newProducts = cart.products.filter(item => productsRejected.includes(item.product._id));
+            await this.#CartService.updateCartProducts(cid, newProducts);
+
+            res.status(200).send({
+                status: "success",
+                message: "Compra procesada",
+                ticket: ticket,
+                productsRejected: productsRejected,
+            });
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send({ status: "error", message: "Error procesando la compra." });
         }
     };
 

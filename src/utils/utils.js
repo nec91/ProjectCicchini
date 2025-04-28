@@ -19,41 +19,34 @@ export const generateJWToken = (user) => {
 };
 
 export const passportCall = (strategy) => {
-
     return async (req, res, next) => {
-        console.log("Entrando a llamar strategy: ");
-        console.log(strategy);
-
-        passport.authenticate(strategy, function (err, user, info) {
-            if (err) return next(err);
-            if (!user) {
-                return res.status(401).send({ error: info.messages ? info.messages : info.toString() })
-            }
-            console.log("Usuario obtenido del strategy: ");
-            console.log(user);
-            req.user = user;
-            next()
-        })(req, res, next);
-    }
-}
+      console.log("Entrando a llamar strategy: ");
+      console.log(strategy);
+  
+      passport.authenticate(strategy, function (err, user) {
+        if (err) return next(err);
+  
+        if (!user) {
+          console.log("Token inválido o expirado, redirigiendo al login...");
+          return res.redirect("/users/login");
+        }
+          console.log("Usuario obtenido del strategy: ");
+        console.log(user);
+          req.user = user;
+        next();
+      })(req, res, next);
+    };
+  };
 
 
 export const cookieExtractor = req => {
     let token = null;
     console.log("CookieExtractor");
-    console.log("req.cookies", req);
-    console.log("req.cookies", req.cookies);
-
     if (req && req.cookies) {
-        console.log("Cookies presentes: ");
-        console.log(req.cookie);
-        token = req.cookies['jwtCookieToken'];
-
-
+         token = req.cookies['jwtCookieToken'];
         console.log("Token obtenido desde Cookie:");
         console.log(token);
     }
-
     return token;
 }
 
