@@ -1,0 +1,19 @@
+<h1>Historial de compras</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Fecha</th>
+      <th>Monto</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each tickets}}
+      <tr>
+        <td>{{this.code}}</td>
+        <td>{{this.purchase_datetime}}</td>
+        <td>${{this.amount}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

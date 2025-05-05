@@ -1,14 +1,15 @@
-import { ProductService } from "../services/products.services.js"
+import { ProductService } from "../services/products.services.js";
 
 class ProductController {
-  #productService
+  #productService;
+
   constructor() {
-    this.#productService = new ProductService()
+    this.#productService = new ProductService();
   }
 
-  createProduct = async (req, res, next) => {
+  createProduct = async (req, res) => {
     try {
-      const { title, description, code, price, stock, category, thumbnail } = req.body
+      const { title, description, code, price, stock, category, thumbnail } = req.body;
       const productCreated = await this.#productService.createProduct({
         title,
         description,
@@ -17,71 +18,71 @@ class ProductController {
         stock,
         category,
         thumbnail,
-      })
+      });
       res.send({
-        message: 'Product created',
+        message: "Product created",
         product_id: productCreated._id,
-      })
+      });
     } catch (error) {
-      next(res.status(400).json({ error: "Error al ingresar el producto." }))
+      res.status(400).json({ error: "Error al ingresar el producto." });
     }
-  }
-  getAllProducts = async (req, res, next) => {
+  };
+
+  getAllProducts = async (req, res) => {
     try {
       const { query, options } = res.paginatedResults;
       const result = await this.#productService.getAllProducts(query, options);
 
       res.status(200).json({
         status: "success",
-        payload: result.docs,
-        totalPages: result.totalPages,
-        prevPage: result.prevPage,
-        nextPage: result.nextPage,
-        page: result.page,
-        hasPrevPage: result.hasPrevPage,
-        hasNextPage: result.hasNextPage,
-        prevLink: result.hasPrevPage ? `/api/products?page=${result.prevPage}&limit=${options.limit}` : null,
-        nextLink: result.hasNextPage ? `/api/products?page=${result.nextPage}&limit=${options.limit}` : null
+        payload: result.products,
+        totalPages: result.pagination.totalPages,
+        prevPage: result.pagination.prevPage,
+        nextPage: result.pagination.nextPage,
+        page: result.pagination.page,
+        hasPrevPage: result.pagination.hasPrevPage,
+        hasNextPage: result.pagination.hasNextPage,
+        prevLink: result.pagination.hasPrevPage ? `/api/products?page=${result.pagination.prevPage}&limit=${options.limit}` : null,
+        nextLink: result.pagination.hasNextPage ? `/api/products?page=${result.pagination.nextPage}&limit=${options.limit}` : null
       });
     } catch (error) {
-      next(res.status(400).json({ error: "Error al obtener los productos." }));
+      res.status(400).json({ error: "Error al obtener los productos." });
     }
   };
 
-  getProductById = async (req, res, next) => {
+  getProductById = async (req, res) => {
     try {
-      const id = req.params.pid
-      const product = await this.#productService.getProductById(id)
+      const id = req.params.pid;
+      const product = await this.#productService.getProductById(id);
       if (!product) {
         res.status(404).json({ error: "Producto no encontrado" });
       } else {
         res.status(200).json(product);
       }
     } catch (error) {
-      next(res.status(400).json({ error: "Error al buscar el producto." }));
+      res.status(400).json({ error: "Error al buscar el producto." });
     }
-  }
+  };
 
-  modifyProductById = async (req, res, netx) => {
+  modifyProductById = async (req, res) => {
     try {
-      //const { pid } = req.params
-      const id = req.params.pid
-      const updateData = req.body
+      const id = req.params.pid;
+      const updateData = req.body;
 
-      const updatedProduct = await this.#productService.modifyProductById(id, updateData)
+      const updatedProduct = await this.#productService.modifyProductById(id, updateData);
       res.status(200).json({
         message: "Producto actualizado exitosamente",
         product: updatedProduct,
       });
     } catch (error) {
-      netx(res.status(400).json({ error: error.message }))
+      res.status(400).json({ error: error.message });
     }
-  }
+  };
 
-  deleteProductById = async (req, res, next) => {
+  deleteProductById = async (req, res) => {
     try {
-      const id = req.params.pid
-      const deletedProduct = await this.#productService.deleteProductById(id)
+      const id = req.params.pid;
+      const deletedProduct = await this.#productService.deleteProductById(id);
       if (!deletedProduct) {
         res.status(404).json({ error: "Producto no encontrado" });
       } else {
@@ -91,11 +92,9 @@ class ProductController {
         });
       }
     } catch (error) {
-      next(res.status(400).json({ error: "Error al buscar el producto." }));
+      res.status(400).json({ error: "Error al buscar el producto." });
     }
-  }
+  };
 }
 
-
-
-export default new ProductController
+export default new ProductController();

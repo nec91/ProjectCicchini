@@ -29,6 +29,14 @@ class TicketRepository {
       throw new Error(`Error en el repository (getAllTickets): ${error.message}`);
     }
   };
+
+  getTicketsByPurchaser = async (email) => {
+    try {
+      return await this.model.find({ purchaser: email }).lean();
+    } catch (error) {
+      throw new Error(`Error en el repository (getTicketsByPurchaser): ${error.message}`);
+    }
+  };
 }
 
 export { TicketRepository };

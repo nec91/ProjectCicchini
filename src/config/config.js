@@ -13,6 +13,8 @@ const PASSWORDMONGODB = process.env.PASSWORDMONGODB
 const SERVER_PORT = process.env.SERVER_PORT
 const SESSION_SECRET = process.env.SESSION_SECRET
 const COOKIE_PASSWORD = process.env.COOKIE_PASSWORD
+const MAIL_GMAIL_USER = process.env.MAIL_GMAIL_USER
+const MAIL_GMAIL_PASSWORD = process.env.MAIL_GMAIL_PASSWORD
 
 export const config = {
   session: {
@@ -30,4 +32,6 @@ export const config = {
     connectionString: `mongodb+srv://${USERMONGODB}:${PASSWORDMONGODB}@cluster0.noki4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`,
   },
   cookiePassword: COOKIE_PASSWORD,
+  MAIL_GMAIL_USER: MAIL_GMAIL_USER,
+  MAIL_GMAIL_PASSWORD: MAIL_GMAIL_PASSWORD,
 }

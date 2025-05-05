@@ -30,6 +30,10 @@ class TicketService {
       throw new Error(`Error en el service (getAllTickets): ${error.message}`);
     }
   };
+
+  getTicketsByPurchaser = async (email) => {
+    return await this.TicketRepository.getTicketsByPurchaser(email);
+  };
 }
 
 export { TicketService };

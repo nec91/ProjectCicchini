@@ -1,0 +1,40 @@
+<div>
+  <h1>Lista de Productos</h1>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {{#each products}}
+      <div style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; width: 250px; text-align: center;">
+        {{#if this.thumbnail}}
+          <img src="{{this.thumbnail}}" alt="{{this.title}}" style="width: 100%; height: auto;">
+        {{else}}
+          <img src="https://via.placeholder.com/250x200?text=Sin+Imagen" alt="Sin Imagen" style="width: 100%; height: auto;">
+        {{/if}}
+
+        <h3>{{this.title}}</h3>
+        <p>{{this.description}}</p>
+        <p><strong>Código:</strong> {{this.code}}</p>
+        <p><strong>Precio:</strong> ${{this.price}}</p>
+        <p><strong>Stock:</strong> {{this.stock}}</p>
+        <p><strong>Categoría:</strong> {{this.category}}</p>
+
+        <form method="POST" action="/api/carts/{{../user.cart}}/products/{{this._id}}">
+          <button type="submit">Agregar al carrito</button>
+        </form>
+
+        <a href="/products/{{this._id}}">Ver detalle</a>
+      </div>
+    {{/each}}
+  </div>
+
+  <div style="margin-top: 20px; text-align: center;">
+    {{#if pagination.hasPrevPage}}
+      <a href="/products?page={{pagination.prevPage}}">◀️ Anterior</a>
+    {{/if}}
+
+    <span> Página {{pagination.page}} de {{pagination.totalPages}} </span>
+
+    {{#if pagination.hasNextPage}}
+      <a href="/products?page={{pagination.nextPage}}">Siguiente ▶️</a>
+    {{/if}}
+  </div>
+</div>
