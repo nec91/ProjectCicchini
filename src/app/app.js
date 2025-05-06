@@ -11,10 +11,6 @@ import { cartRouter } from "../routes/carts.router.js";
 import { productsRouter } from "../routes/products.router.js";
 import { usersViewRouter } from "../routes/users.view.router.js";
 import { sessionRouter } from "../routes/session.router.js";
-import { mailRouter } from "../routes/mail.router.js";
-
-
-
 
 const initApp = () => {
   const app = express();
@@ -50,7 +46,6 @@ const initApp = () => {
   app.use("/api/products", productsRouter);
   app.use("/users", usersViewRouter);
   app.use("/api/sessions", sessionRouter);
-  app.use("/api/mail", mailRouter);
 
   app.all("*", (req, res) => {
     res.status(404).send({
