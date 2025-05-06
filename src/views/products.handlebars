@@ -1,40 +1,43 @@
 <div>
-  <h1>Lista de Productos</h1>
+  <h1>Productos disponibles para compra</h1>
 
-  <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    {{#each products}}
-      <div style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; width: 250px; text-align: center;">
-        {{#if this.thumbnail}}
-          <img src="{{this.thumbnail}}" alt="{{this.title}}" style="width: 100%; height: auto;">
-        {{else}}
-          <img src="https://via.placeholder.com/250x200?text=Sin+Imagen" alt="Sin Imagen" style="width: 100%; height: auto;">
-        {{/if}}
+  <table>
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Código</th>
+        <th>Precio</th>
+        <th>Stock total</th>
+        <th>Cantidad</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each products}}
+      <tr data-product-id="{{this._id}}">
+        <td>{{this.title}}</td>
+        <td>{{this.code}}</td>
+        <td>${{this.price}}</td>
+        <td>{{this.quantity}}</td>
+        <td>
+          <button type="button" class="decrease-btn">➖</button>
+          <span class="quantity-value">0</span>
+          <button type="button" class="increase-btn">➕</button>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 
-        <h3>{{this.title}}</h3>
-        <p>{{this.description}}</p>
-        <p><strong>Código:</strong> {{this.code}}</p>
-        <p><strong>Precio:</strong> ${{this.price}}</p>
-        <p><strong>Stock:</strong> {{this.stock}}</p>
-        <p><strong>Categoría:</strong> {{this.category}}</p>
+  <br>
 
-        <form method="POST" action="/api/carts/{{../user.cart}}/products/{{this._id}}">
-          <button type="submit">Agregar al carrito</button>
-        </form>
+  <form id="finalizePurchaseForm">
+    <button type="submit">🛒 Ir al carrito</button>
+  </form>
 
-        <a href="/products/{{this._id}}">Ver detalle</a>
-      </div>
-    {{/each}}
-  </div>
-
-  <div style="margin-top: 20px; text-align: center;">
-    {{#if pagination.hasPrevPage}}
-      <a href="/products?page={{pagination.prevPage}}">◀️ Anterior</a>
-    {{/if}}
-
-    <span> Página {{pagination.page}} de {{pagination.totalPages}} </span>
-
-    {{#if pagination.hasNextPage}}
-      <a href="/products?page={{pagination.nextPage}}">Siguiente ▶️</a>
-    {{/if}}
-  </div>
+  <br>
+  <p><a href="/users">Volver al perfil</a></p>
+  <p><a href="/api/sessions/logout">Cerrar sesión</a></p>
 </div>
+
+<script src="/js/products.js"></script>

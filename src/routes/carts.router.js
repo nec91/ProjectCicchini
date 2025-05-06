@@ -1,11 +1,13 @@
 import { Router } from "express";
+import { passportAuthenticate } from "../middlewares/passportAuth.middleware.js";
 import cartsController from "../controller/carts.controller.js";
+
 const cartRouter = Router();
 
 
 
 // Crear un nuevo carrito
-cartRouter.post("/", cartsController.createCart);
+cartRouter.post("/", passportAuthenticate("current"), cartsController.createCart);
 
 // Obtener productos de un carrito
 cartRouter.get("/:cid", cartsController.getCartById);
@@ -26,6 +28,6 @@ cartRouter.put("/:cid", cartsController.updateCartProducts);
 cartRouter.put("/:cid/products/:pid", cartsController.updateProductQuantity);
 
 //Finalizacion de proceso de compra
-cartRouter.post("/:cid/purchase", cartsController.purchaseCart);
+cartRouter.post("/:cid/purchase", passportAuthenticate('current'), cartsController.purchaseCart);
 
 export { cartRouter }

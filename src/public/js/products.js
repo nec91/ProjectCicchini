@@ -1,45 +1,71 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const buttons = document.querySelectorAll(".add-to-cart-btn");
-  
-    const userInfo = await fetch("/api/sessions/current", { method: "GET" })
-      .then(res => res.json())
-      .then(data => data.user);
-  
-    let cartId = userInfo.cart;
-  
-    async function createCartForUser() {
-      const createCartRes = await fetch("/api/carts", { method: "POST" });
-      const { cart } = await createCartRes.json();
-      cartId = cart._id;
-  
-      // Asignar el carrito recién creado al usuario
-      await fetch("/api/users/assign-cart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cartId }),
-      });
-  
-      return cartId;
-    }
-  
-    buttons.forEach(button => {
-      button.addEventListener("click", async () => {
-        const productId = button.getAttribute("data-id");
-  
-        if (!cartId) {
-          cartId = await createCartForUser();
-        }
-  
-        const res = await fetch(`/api/carts/${cartId}/products/${productId}`, {
-          method: "POST",
-        });
-  
-        if (res.ok) {
-          alert("Producto agregado al carrito!");
-        } else {
-          alert("Error agregando producto.");
-        }
-      });
+document.addEventListener("DOMContentLoaded", () => {
+  const rows = document.querySelectorAll("tbody tr");
+  const productQuantities = {};
+
+  rows.forEach(row => {
+    const decreaseBtn = row.querySelector(".decrease-btn");
+    const increaseBtn = row.querySelector(".increase-btn");
+    const quantitySpan = row.querySelector(".quantity-value");
+    const productId = row.dataset.productId;
+    const maxStock = parseInt(row.querySelector("td:nth-child(4)").innerText);
+
+    let quantity = 0;
+    quantitySpan.textContent = quantity;
+    productQuantities[productId] = quantity;
+
+    decreaseBtn.addEventListener("click", () => {
+      if (quantity > 0) {
+        quantity--;
+        quantitySpan.textContent = quantity;
+        productQuantities[productId] = quantity;
+      }
+    });
+
+    increaseBtn.addEventListener("click", () => {
+      if (quantity < maxStock) {
+        quantity++;
+        quantitySpan.textContent = quantity;
+        productQuantities[productId] = quantity;
+      }
     });
   });
-  
+
+  const finalizeForm = document.getElementById("finalizePurchaseForm");
+  finalizeForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    try {
+      const resCart = await fetch("/api/carts", { 
+        method: "POST", 
+        credentials: "include" 
+      });
+
+      if (!resCart.ok) throw new Error("Error creando carrito");
+
+      const dataCart = await resCart.json();
+      const cartId = dataCart.carrito._id;
+
+      localStorage.setItem("cartId", cartId);
+
+      const addPromises = [];
+      for (const [productId, qty] of Object.entries(productQuantities)) {
+        if (qty > 0) {
+          addPromises.push(
+            fetch(`/api/carts/${cartId}/products/${productId}`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ quantity: qty }),
+              credentials: "include" 
+            })
+          );
+        }
+      }
+      await Promise.all(addPromises);
+      window.location.href = `/users/purchase/cart?cartId=${cartId}`;
+
+    } catch (err) {
+      console.error("Error al ir al carrito:", err);
+      alert("Ocurrió un error al ir al carrito.");
+    }
+  });
+});

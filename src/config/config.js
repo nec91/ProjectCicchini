@@ -20,7 +20,7 @@ export const config = {
   session: {
     store: MongoStore.create({
       mongoUrl: `mongodb+srv://${USERMONGODB}:${PASSWORDMONGODB}@cluster0.noki4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`,
-      ttl: 1200,
+      ttl: 12000,
     }),
     secret: SESSION_SECRET,
     resave: false,

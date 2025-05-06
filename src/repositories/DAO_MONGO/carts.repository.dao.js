@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 
 class CartRepository {
     constructor() {
-        this.CartModel = CartModel; // Usamos this.cartModel de forma consistente
+        this.CartModel = CartModel;
     }
 
     createCart = async () => {
         try {
-            return await this.CartModel.create({ products: [] }); // Usamos this.cartModel
+            return await this.CartModel.create({ products: [] });
         } catch (error) {
             throw new Error(`Error en el repository (createCart): ${error.message}`);
         }
@@ -19,7 +19,9 @@ class CartRepository {
             if (!mongoose.Types.ObjectId.isValid(cartId)) {
                 throw new Error("ID no válido de MongoDB");
             }
-            return await this.CartModel.findById(cartId).populate("products.product")
+            return await this.CartModel.findById(cartId)
+                .populate("products.product")
+                .lean();
         } catch (error) {
             throw new Error(`Error en el repository (getCartById): ${error.message}`);
         }
@@ -31,23 +33,27 @@ class CartRepository {
                 throw new Error("ID no válido de MongoDB");
             }
 
-            const cart = await this.CartModel.findById(cartId);
-            if (!cart) {
-                return null;
+            const cart = await this.CartModel.findOneAndUpdate(
+                { _id: cartId, "products.product": productId },
+                { $inc: { "products.$.quantity": quantity } },
+                { new: true }
+            );
+
+            if (cart) {
+                return await cart.populate("products.product");
+            } else {
+                const cartPush = await this.CartModel.findByIdAndUpdate(
+                    cartId,
+                    { $push: { products: { product: productId, quantity } } },
+                    { new: true }
+                );
+                return await cartPush.populate("products.product");
             }
 
-            const productIndex = cart.products.findIndex(p => p.product.toString() === productId);
-            if (productIndex !== -1) {
-                cart.products[productIndex].quantity += quantity;
-            } else {
-                cart.products.push({ product: productId, quantity });
-            }
-            await cart.save();
-            return cart;
         } catch (error) {
             throw new Error(`Error en el repository (addProductToCart): ${error.message}`);
         }
-    }
+    };
 
     removeProductFromCart = async (cartId, productId) => {
         try {

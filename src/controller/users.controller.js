@@ -23,8 +23,10 @@ class UsersController {
             res.cookie("jwtCookieToken", access_token, {
                 maxAge: 60000 * 5,
                 httpOnly: true,
+                sameSite: 'lax',
+                secure: false,
+                signed: true 
             });
-
             res.send({ message: "Usuario logueado correctamente" });
         } catch (error) {
             console.error(error.message);

@@ -9,11 +9,11 @@ class MailService {
   sendPurchaseConfirmation = async (ticket, purchaser) => {
     const mailOptions = {
       from: `"Mi Tienda" <${config.MAIL_GMAIL_USER}>`,
-      to: purchaser,
+      to: purchaser.email,
       subject: `Compra confirmada - Ticket ${ticket.code}`,
       html: `
         <h1>¡Gracias por tu compra!</h1>
-        <p>Hola ${purchaser},</p>
+        <p>Hola ${purchaser.name},</p>
         <p>Tu compra ha sido procesada con éxito.</p>
         <h2>Detalle del Ticket</h2>
         <ul>
@@ -24,7 +24,7 @@ class MailService {
         <p>¡Gracias por confiar en nosotros!</p>
       `,
     };
-
+  
     return await this.mailRepository.sendMail(mailOptions);
   };
 }

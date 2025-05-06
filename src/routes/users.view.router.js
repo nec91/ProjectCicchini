@@ -12,18 +12,18 @@ usersViewRouter.get("/login", usersViewsController.renderLogin);
 usersViewRouter.get("/register", usersViewsController.renderRegister);
 
 // Perfil del usuario (requiere autenticación)
-usersViewRouter.get(
-  "/",
-  passportAuthenticate("current"),
-  usersViewsController.renderProfile
-);
+usersViewRouter.get("/", passportAuthenticate("current"), usersViewsController.renderProfile);
 
 // Dashboard del admin (requiere autenticación + rol admin)
-usersViewRouter.get(
-  "/dashboard-admin",
-  passportAuthenticate("current"),
-  authorize("admin"),
-  usersViewsController.renderAdminDashboard
-);
+usersViewRouter.get("/dashboard-admin", passportAuthenticate("current"), authorize("admin"), usersViewsController.renderAdminDashboard);
+
+//Vista para seleccionar productos por parte del usuario
+usersViewRouter.get("/purchase/products", passportAuthenticate("current"), usersViewsController.renderPurchaseProducts);
+
+//Vista para ver el carrito del usuario
+usersViewRouter.get("/purchase/cart", passportAuthenticate("current"), usersViewsController.renderCart);
+ 
+//vista final donde se muestra el ticket de la compra finalizada
+usersViewRouter.get("/purchase/ticket/:tid", passportAuthenticate("current"), usersViewsController.renderTicketById);
 
 export { usersViewRouter };

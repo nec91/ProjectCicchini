@@ -24,10 +24,17 @@ const initApp = () => {
   app.use(express.urlencoded({ extended: true }));
 
   // Config HBS
-  app.engine('handlebars', handlebars.engine());
-  app.set('views', __dirname + '/src/views')
+  const hbs = handlebars.create({
+    helpers: {
+      multiply: (a, b) => a * b,
+      lte: (a, b) => a <= b
+    }
+  });  
+  app.engine('handlebars', hbs.engine);
+  app.set('views', __dirname + '/src/views');
   app.set('view engine', 'handlebars');
   app.use(express.static(__dirname + '/src/public'));
+
 
   //Cookies
   app.use(cookieParser(config.cookiePassword))

@@ -13,21 +13,22 @@ const ExtractJWT = jwtStrategy.ExtractJwt;
 
 const initializePassport = () => {
     //JWT
-    passport.use('current', new JwtStrategy(
-        {
-            jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-            secretOrKey: PRIVATE_KEY
-        }, async (jwt_payload, done) => {
-            console.log("Entrando a passport Strategy con JWT.");
-            try {
-                console.log("JWT obtenido del payload");
-                return done(null, jwt_payload.user);
-            } catch (error) {
-                console.error(error);
-                return done(error);
+    passport.use('current', new JwtStrategy({
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        secretOrKey: PRIVATE_KEY
+    }, async (jwt_payload, done) => {
+        console.log("JWT payload recibido en estrategia:", jwt_payload);
+        try {
+            const userFromDb = await userModel.findOne({ email: jwt_payload.user.email }).populate('cart');
+            if (!userFromDb) {
+                return done(null, false);
             }
+            return done(null, userFromDb);
+        } catch (error) {
+            return done(error);
         }
-    ));
+    }));
+
 
     //LOCAL
     passport.use('register', new localStrategy(
